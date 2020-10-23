@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30523.141
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GdeltFilesProcessor", "GdeltFilesProcessor\GdeltFilesProcessor.csproj", "{DEFD13BE-7F95-4D97-B0B5-72068DB23530}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GdeltFilesProcessor", "GdeltFilesProcessor\GdeltFilesProcessor.csproj", "{DEFD13BE-7F95-4D97-B0B5-72068DB23530}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GdeltFilesProcessor.Core", "GdeltFilesProcessor.Core\GdeltFilesProcessor.Core.csproj", "{5077EFB0-7F16-4789-AB90-09B9280C1BBF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GdeltFilesProcessor.Tests", "GdeltFilesProcessor.Tests\GdeltFilesProcessor.Tests.csproj", "{5B4C9CE8-F569-47A4-AC7A-37F71737C82D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{DEFD13BE-7F95-4D97-B0B5-72068DB23530}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DEFD13BE-7F95-4D97-B0B5-72068DB23530}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DEFD13BE-7F95-4D97-B0B5-72068DB23530}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5077EFB0-7F16-4789-AB90-09B9280C1BBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5077EFB0-7F16-4789-AB90-09B9280C1BBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5077EFB0-7F16-4789-AB90-09B9280C1BBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5077EFB0-7F16-4789-AB90-09B9280C1BBF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B4C9CE8-F569-47A4-AC7A-37F71737C82D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B4C9CE8-F569-47A4-AC7A-37F71737C82D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B4C9CE8-F569-47A4-AC7A-37F71737C82D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B4C9CE8-F569-47A4-AC7A-37F71737C82D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

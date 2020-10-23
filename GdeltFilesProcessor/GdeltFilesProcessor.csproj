@@ -5,8 +5,12 @@
     <UserSecretsId>f7a95a09-20b8-447f-a94c-6277524b2b67</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.Functions.Extensions" Version="1.1.0" />
     <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.Storage" Version="3.0.10" />
     <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="3.0.7" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GdeltFilesProcessor.Core\GdeltFilesProcessor.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="host.json">
