@@ -1,11 +1,11 @@
-﻿using GdeltFilesProcessor.Core.Services.QueueService;
+﻿using GdeltFilesProcessor.Core.Services.GdeltFileDownloadService;
+using GdeltFilesProcessor.Core.Services.GdeltUnZipService;
+using GdeltFilesProcessor.Core.Services.QueueService;
 using GdeltFilesProcessor.Core.UseCases.ProcessFile;
 using Moq;
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace GdeltFilesProcessor.Tests.Core.UseCases.ProcessFile
@@ -13,21 +13,39 @@ namespace GdeltFilesProcessor.Tests.Core.UseCases.ProcessFile
     public class ProcessFileHandlerTests
     {
         private IProcessFileHandler processFileHandler;
-        private Mock<IGdeltCsvEventExtractor> gdeltCsvEventExtractor;
+        private Mock<IGdeltFileDownloadService> fileDownloader;
+        private Mock<IGdeltUnZipService> zipService;
+        private Mock<ICsvToGdeltEventConverter> csvToGdeltConverter;
         private Mock<IQueueService> queueService;
 
         [SetUp]
         public void Setup()
         {
-            this.gdeltCsvEventExtractor = new Mock<IGdeltCsvEventExtractor>();
+            this.fileDownloader = new Mock<IGdeltFileDownloadService>();
+            this.zipService = new Mock<IGdeltUnZipService>();
+            this.csvToGdeltConverter = new Mock<ICsvToGdeltEventConverter>();
             this.queueService = new Mock<IQueueService>();
 
-            this.gdeltCsvEventExtractor.Setup(x => x.ConvertCsvLineToEvent(It.IsAny<string>(), It.IsAny<char>())).Returns(
-                new GdeltEvent {
+            var stream = GenerateStreamFromString("some-string-in-a-stream");
+            this.zipService.Setup(x => x.UnZip(It.IsAny<Stream>())).Returns(stream);
+
+            this.csvToGdeltConverter.Setup(x => x.ConvertCsvLineToGdeltEvent(It.IsAny<string>(), It.IsAny<char>())).Returns(
+                new GdeltEvent
+                {
                     GlobalEventID = 10
                 });
 
-            this.processFileHandler = new ProcessFileHandler(gdeltCsvEventExtractor.Object, queueService.Object);
+            this.processFileHandler = new ProcessFileHandler(fileDownloader.Object, zipService.Object, csvToGdeltConverter.Object, queueService.Object);
+        }
+
+        private static Stream GenerateStreamFromString(string stringInStream)
+        {
+            var stream = new MemoryStream();
+            var writer = new StreamWriter(stream);
+            writer.Write(stringInStream);
+            writer.Flush();
+            stream.Position = 0;
+            return stream;
         }
 
         [Test]
@@ -44,16 +62,16 @@ namespace GdeltFilesProcessor.Tests.Core.UseCases.ProcessFile
                 () => this.processFileHandler.Handle(new ProcessFileRequest { DownloadUrl = "" }));
         }
 
-        //[Test]
-        //public async Task Handle_should_queue_correct_event()
-        //{
-        //    await this.processFileHandler.Handle(
-        //        new ProcessFileRequest
-        //        {
-        //            DownloadUrl = "http://data.gdeltproject.org/events/20201014.export.CSV.zip"
-        //        });
+        [Test]
+        public async Task Handle_should_queue_correct_event()
+        {
+            await this.processFileHandler.Handle(
+                new ProcessFileRequest
+                {
+                    DownloadUrl = "http://url"
+                });
 
-        //    this.gdeltCsvEventExtractor.Verify(x=>x.ConvertCsvLineToEvent(It.Is<string>, '\t')).
-        //}
+            this.queueService.Verify(x => x.Queue(It.Is<GdeltEvent>(p => p.GlobalEventID == 10)), Times.Once);
+        }
     }
 }

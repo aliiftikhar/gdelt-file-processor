@@ -13,7 +13,7 @@ namespace GdeltFilesProcessor
     {
         public override void Configure(IFunctionsHostBuilder builder)
         {
-            builder.Services.AddTransient<IGdeltCsvEventExtractor, GdeltCsvEventExtractor>();
+            builder.Services.AddTransient<ICsvToGdeltEventConverter, CsvToGdeltEventConverter>();
             builder.Services.AddTransient<IProcessFileHandler, ProcessFileHandler>();
         }
     }

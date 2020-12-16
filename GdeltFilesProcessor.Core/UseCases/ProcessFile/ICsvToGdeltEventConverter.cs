@@ -4,8 +4,8 @@ using System.Text;
 
 namespace GdeltFilesProcessor.Core.UseCases.ProcessFile
 {
-    public interface IGdeltCsvEventExtractor
+    public interface ICsvToGdeltEventConverter
     {
-        GdeltEvent ConvertCsvLineToEvent(string csvLine, char csvSeperator);
+        GdeltEvent ConvertCsvLineToGdeltEvent(string csvLine, char csvSeperator);
     }
 }
