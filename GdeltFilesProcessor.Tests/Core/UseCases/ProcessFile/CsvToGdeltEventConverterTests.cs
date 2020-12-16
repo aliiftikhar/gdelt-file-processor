@@ -18,11 +18,19 @@ namespace GdeltFilesProcessor.Tests.Core.UseCases.ProcessFile
         }
 
         [Test]
-        public void Gdelt_event_should_have_correct_id()
+        public void Gdelt_event_should_have_correct_globalEventId()
         {
             var gdeltEvent = this.csvToGdeltEventConverter.ConvertCsvLineToGdeltEvent("1129", '\t');
 
             Assert.AreEqual(1129, gdeltEvent.GlobalEventID);
+        }
+
+        [Test]
+        public void Gdelt_event_should_have_correct_day()
+        {
+            var gdeltEvent = this.csvToGdeltEventConverter.ConvertCsvLineToGdeltEvent("1129\t15", '\t');
+
+            Assert.AreEqual(15, gdeltEvent.Day);
         }
     }
 }

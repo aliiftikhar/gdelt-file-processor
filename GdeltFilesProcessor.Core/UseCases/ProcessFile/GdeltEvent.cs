@@ -7,5 +7,6 @@ namespace GdeltFilesProcessor.Core.UseCases.ProcessFile
     public class GdeltEvent
     {
         public int GlobalEventID { get; set; }
+        public int Day { get; set; }
     }
 }
